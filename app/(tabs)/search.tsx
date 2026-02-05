@@ -6,6 +6,7 @@ import { icons } from '@/constants/icons';
 import useFetch from '@/services/useFetch';
 import { fetchMovies } from '@/services/api';
 import MovieCard from '@/components/MoiveCard';
+import { updateSearchCount } from '@/services/appwrite';
 
 export default function Search(){
     const [searchQuery, setSearchQuery] = useState('');
@@ -18,9 +19,17 @@ export default function Search(){
             else{
                 reset();
             }
-        }, 500);
+        }, 1000);
         return () => clearTimeout(timeout)
     },[searchQuery]);
+    useEffect(()=>{
+      if(movies && movies.length>0 && searchQuery.trim()){
+        const recordSearch = async() => {
+          await updateSearchCount(searchQuery, movies[0]);
+        }
+        recordSearch();
+      }
+    },[movies]);
     return (
         <View className="flex-1 bg-primary">
           <Image source={images.bg} className="absolute w-full z-0" />
