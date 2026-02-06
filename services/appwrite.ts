@@ -59,7 +59,6 @@ export const getMostSerachedMovies = async() : Promise<TrendingMovie[] | null> =
             ]
         });
         const uniqueMostSearchedMovies = Array.from(new Map(result.rows.map(item => [item.title, item])).values()).slice(0,5);
-        console.log(uniqueMostSearchedMovies);
         return  uniqueMostSearchedMovies as unknown as TrendingMovie[];
     } catch (error) {
         console.log(error);

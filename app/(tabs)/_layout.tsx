@@ -40,7 +40,8 @@ export default function _Layout(){
                     overflow: "hidden",
                     borderWidth: 1,
                     borderColor: "#0f0d23"
-                }
+                },
+                headerShown: false
             }}
         >
             <Tabs.Screen
