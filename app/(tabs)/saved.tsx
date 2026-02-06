@@ -1,9 +1,8 @@
 import React from 'react';
 import { View, Text, FlatList, Image, TouchableOpacity } from 'react-native';
-import { Stack, useRouter } from 'expo-router';
+import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import useFetch from '@/services/useFetch';
-import { fetchMovieDetails } from '@/services/api';
+import {MotiView} from 'moti';
 
 // Mock Data - Replace this with your Appwrite/State data later
 const SAVED_MOVIES = [
@@ -15,36 +14,44 @@ const SavedMovieCard = ({ item }: { item: any }) => {
   const router = useRouter();
 
   return (
-    <TouchableOpacity 
-      className="flex-row items-center mb-6 bg-secondary/10 p-3 rounded-2xl border border-white/5"
-      onPress={() => router.push(`/movies/${item.id}`)}
+    <MotiView
+      from={{ opacity: 0, translateY: 20 }}
+      animate={{ opacity: 1, translateY: 0 }}
+      transition={{ type: "timing", duration: 500 }}
     >
-      <Image 
-        source={{ uri: item.image }} 
-        className="w-20 h-28 rounded-xl"
-        resizeMode="cover"
-      />
-      
-      <View className="flex-1 ml-4 justify-cenrter">
-        <Text className="text-white text-lg font-bold" numberOfLines={1}>
-          {item.title}
-        </Text>
-        <View className="flex-row items-center mt-1">
-          <Ionicons name="star" size={14} color="#FFD700" />
-          <Text className="text-gray-400 text-sm ml-1">{item.rating} / 10</Text>
-        </View>
-      </View>
+      <TouchableOpacity
+        className="flex-row items-center mb-6 bg-secondary/10 p-3 rounded-2xl border border-white/10"
+        onPress={() => router.push(`/movies/${item.id}`)}
+      >
+        <Image
+          source={{ uri: item.image }}
+          className="w-20 h-28 rounded-xl"
+          resizeMode="cover"
+        />
 
-      <TouchableOpacity className="p-2">
-        <Ionicons name="bookmark" size={24} color="#AB8BFF" />
+        <View className="flex-1 ml-4 justify-cenrter">
+          <Text className="text-white text-lg font-bold" numberOfLines={1}>
+            {item.title}
+          </Text>
+          <View className="flex-row items-center mt-1">
+            <Ionicons name="star" size={14} color="#FFD700" />
+            <Text className="text-gray-400 text-sm ml-1">
+              {item.rating} / 10
+            </Text>
+          </View>
+        </View>
+
+        <TouchableOpacity className="p-2">
+          <Ionicons name="bookmark" size={24} color="#AB8BFF" />
+        </TouchableOpacity>
       </TouchableOpacity>
-    </TouchableOpacity>
+    </MotiView>
   );
 };
 
 export default function SavedMovies() {
   return (
-    <View className="flex-1 bg-primary px-5">
+    <View className="flex-1 bg-primary px-5 py-10">
       <FlatList
         data={SAVED_MOVIES}
         keyExtractor={(item) => item.id}

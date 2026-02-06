@@ -18,7 +18,6 @@ export const updateSearchCount = async(query: string, movie: Movie) => {
     });
     if(result.total>0){
         const existingMovie = result.rows[0];
-        console.log(existingMovie);
         await database.updateRow({
             databaseId: DATABASE_ID,
             tableId: TABLE_ID,
